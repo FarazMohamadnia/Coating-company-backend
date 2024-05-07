@@ -1,5 +1,4 @@
 const express = require('express');
-const app = express();
 const OwnerloginRouter = express.Router();
 // bcrypt package
 const bcrypt = require('bcryptjs');
@@ -13,12 +12,15 @@ const { ADMIN_USERNAME , ADMIN_PASSWORD , SECRET_KEY , EMAIL_OWNER} = process.en
 const jwt = require('jsonwebtoken');
 const secretKey = SECRET_KEY ;
 
+// Time contoller :: Email
+const accessControlMiddleware = require('../../middlewares/ownerMid/EmailTimestampMiddlewares');
+
 // owner config
 const owner = {id:123 , username : ADMIN_USERNAME, password: ADMIN_PASSWORD};
 
 let code;
-
-OwnerloginRouter.post('/getEmailcode', (req, res) => {
+// send code
+OwnerloginRouter.post('/getEmailcode', accessControlMiddleware ,(req, res) => {
     code =new otp({ digits: 6 }).totp();
     const mailOptions = {
         from: EMAIL_OWNER,
@@ -35,11 +37,15 @@ OwnerloginRouter.post('/getEmailcode', (req, res) => {
             })
         } else {
             console.log('Email sent: ' + info.response);
+            setTimeout(() => {
+                code = 0;
+            }, 2 * 60 * 1000);
             return res.status(200).send('sending code ');
         }
     });
 });
 
+//login
 OwnerloginRouter.post('/', (req, res) => {
     const { username, password , sendcode} = req.body;
     try{
@@ -47,8 +53,8 @@ OwnerloginRouter.post('/', (req, res) => {
         if (username === owner.username && bcrypt.compareSync(password, owner.password)&&
         code == sendcode
         ) {
-            const token = jwt.sign({ id: owner.id, username: owner.username }, secretKey, { expiresIn: '15d' });
-            res.setHeader('Auth' , token);
+            const token = jwt.sign({ id: owner.id, username: owner.username}, secretKey, { expiresIn:'15d' });
+            res.setHeader('Authorization' , token);
             return res.status(200).json({
                 message : 'owner is login'
             });

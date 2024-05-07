@@ -4,6 +4,9 @@ require('dotenv').config();
 const express = require('express');
 const apiRouter = require('./routes/index');
 const app = express();
+// cors package
+const cors =require('cors')
+app.use(cors())
 // helmet package 
 const helmet = require('helmet');
 app.use(helmet());
@@ -21,7 +24,6 @@ app.use('/api',apiRouter);
 
 
 // connect to database
-// اتصال به پایگاه داده MongoDB
 mongoose.connect(`mongodb://localhost:27017/${process.env.DATABASE_URL}`)
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.error('Could not connect to MongoDB', err));

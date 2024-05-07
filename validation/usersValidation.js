@@ -10,7 +10,7 @@ const usersVal = ()=>{
                 if(user)return Promise.reject('email already is use')
             })
         }),
-        body('phoneNumber').notEmpty().withMessage('phone number is empty').isMobilePhone().withMessage('phone number is not valid')
+        body('phoneNumber').notEmpty().withMessage('phone number is empty').isMobilePhone().withMessage('phone number is not valid').isLength({min : 8}).withMessage('Phone Number must be at leatest 8 cahracters')
         .custom(async (value)=> {
             return userSchema.findOne({ phoneNumber : value}).then(user =>{
                 if(user)return Promise.reject('phone number already is use')

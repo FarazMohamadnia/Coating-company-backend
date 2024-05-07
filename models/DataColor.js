@@ -9,6 +9,13 @@ const ColorData = new mongoose.Schema({
     type: String,
     required: true
   },
+  type:{
+    type :String,
+    required: true
+  },
+  colorCode:{
+    type :String,
+  },
   Photo:{
     type :String,
     required: true

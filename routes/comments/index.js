@@ -1,19 +1,31 @@
 const express = require('express');
-const app = express();
 const commentsRouter = express.Router();
+const CommentsVal = require('../../validation/commentsValidation');
+//authenticateOwner
+const authenticateOwner = require('../../middlewares/ownerMid/ownerLoginMiddlewares');
+//cors Auth
+const AuthIpAddress = require('../../config/IPControllerConfig');
+const cors = require('cors'); 
+
 const {
     getComments,
     createComments,
     deleteComments,
-    }=require('../../controllers/comments')
+    updateComments,
+    deleterepliesComments
+    }=require('../../controllers/comments');
 
 //====Router====
 // GET
 commentsRouter.get('/',getComments)
 //POST
-commentsRouter.post('/',createComments)
+commentsRouter.post('/',CommentsVal(),createComments)
 //DELETE 
-commentsRouter.delete('/',deleteComments)
+commentsRouter.delete('/:id',cors(AuthIpAddress),authenticateOwner,deleteComments);
+//PUT
+commentsRouter.put('/:commentid',cors(AuthIpAddress),authenticateOwner,updateComments);
+//DELETE REPLIES
+commentsRouter.delete('/:commentid/replies/:repliesid',cors(AuthIpAddress),authenticateOwner,deleterepliesComments);
 
 
 module.exports = commentsRouter;

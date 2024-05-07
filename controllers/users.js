@@ -19,11 +19,12 @@ const getUsers = (async(req, res) => {
             message:'Error',
             error: err.message 
         });
-    }
+    } 
 });
 
 const createUsers =(async(req , res)=>{
-    const {firstName , lastName , email , phoneNumber , jobDescription , details }= req.body;
+    const {firstName , lastName , email , phoneNumber , jobDescription }= req.body;
+    const {quantity , color , dimensions , weight , photo}=req.body.details[0]
     const ValResult = validationResult(req);
     if(!ValResult.isEmpty())return res.json({
         data :'null',
@@ -38,21 +39,22 @@ const createUsers =(async(req , res)=>{
             phoneNumber: phoneNumber,
             jobDescription:jobDescription,
             details:[{
-                quantity: details.quantity
+                quantity: quantity ,
+                color : color ,
+                dimensions : dimensions ,
+                weight : weight ,
+                photo : photo 
             }]
         });
-
-
-
         const savedUser = await newUser.save();
 
-        res.status(201).json({
+        return res.status(201).json({
             data:savedUser,
             message: 'ok'
         });
 
     }catch(err){
-        res.status(500).json({
+        return res.status(500).json({
             data:'null',
             message: 'Error',
             error : err.message
@@ -68,7 +70,6 @@ const deleteUsers =(async(req , res)=>{
         data:'null',
         message: 'Id Error ...',
     })
-    console.log(userId)
 
     try {
         const deletedUser = await UserModels.findByIdAndDelete(userId);
@@ -76,7 +77,8 @@ const deleteUsers =(async(req , res)=>{
         if (!deletedUser) {
             return res.status(404).json({ 
                 data: 'null',
-                message: "User not found" 
+                message: "Error" ,
+                error : "User not found"
             });
         }
 

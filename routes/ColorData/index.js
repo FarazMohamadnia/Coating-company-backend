@@ -1,6 +1,12 @@
 const express = require('express');
-const app = express();
 const getPriceRouter = express.Router();
+const ColorVal = require('../../validation/colorValidation');
+//cors package for Auth 
+const cors = require('cors');
+const AuthIpAddress = require('../../config/IPControllerConfig');
+// authenticateOwner
+const authenticateOwner = require('../../middlewares/ownerMid/ownerLoginMiddlewares');
+
 const {
     getColorCard,
     createColorCard,
@@ -12,10 +18,10 @@ const {
 //GET
 getPriceRouter.get('/',getColorCard)
 //POST
-getPriceRouter.post('/',createColorCard)
+getPriceRouter.post('/',cors(AuthIpAddress),authenticateOwner,ColorVal(),createColorCard)
 //DELETE 
-getPriceRouter.delete('/',deleteColorCard)
+getPriceRouter.delete('/:id',cors(AuthIpAddress),authenticateOwner,deleteColorCard)
 //PUT
-getPriceRouter.put('/',updateColorCard)
+getPriceRouter.put('/:id',cors(AuthIpAddress),authenticateOwner,updateColorCard)
 
 module.exports = getPriceRouter;

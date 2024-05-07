@@ -1,22 +1,22 @@
 const express = require('express');
-const app = express();
 const storyRouter = express.Router();
+const StoryVal = require('../../validation/storyValidation');
+//authenticateOwner
+const authenticateOwner = require('../../middlewares/ownerMid/ownerLoginMiddlewares');
+const cors = require('cors');
+const AuthIpAddress = require('../../config/IPControllerConfig');
 const {
     getStory,
     createStory,
     deleteStory,
-    updateStory
-    }=require('../../controllers/Story')
-
+    }=require('../../controllers/Story');
 //====Router====
 //GET
-storyRouter.get('/',getStory);
+storyRouter.get('/',getStory); 
 //POST
-storyRouter.post('/',createStory);
+storyRouter.post('/',cors(AuthIpAddress),authenticateOwner,StoryVal(),createStory);
 //DELETE 
-storyRouter.delete('/',deleteStory);
-//PUT
-storyRouter.put('/',updateStory);
+storyRouter.delete('/:id',cors(AuthIpAddress),authenticateOwner,deleteStory);
 
 
 module.exports = storyRouter;

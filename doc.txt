@@ -1,0 +1,129 @@
+The main path of the api
+/////////////////////////
+The main root of all paths
+http://localhost:1200/api
+=========================
+=========================
+The root of all comment paths
+http://localhost:1200/api/comments
+
+Comment root subpaths
+{
+1-http://localhost:1200/api/comments[GET , POST] == PUBLIC
+2-http://localhost:1200/api/comments/:[DELETE , PUT , DELETE replies] == PRIVATE
+    {
+        http://localhost:1200/api/comments/:id == DELETE,
+        http://localhost:1200/api/comments/:commentid == PUT [DES :To reply to other comments by the owner]
+        http://localhost:1200/api/comments/:commentid/replies/:repliesid == DELETE [DES : To delete the owner's own response to comments]
+    
+    }
+}
+
+Post method input values:
+{
+    title : String ,
+    text : String ,
+    createdAt : Date :: default 
+    only Owner :: replies [
+        {
+            rptitle:String ,
+            rptext : String,
+            rpcreatedAt : Date :: default
+        }
+    ]
+}
+//////////////////////////////////////////////////////////
+The root of all getPrice paths
+
+http://localhost:1200/api/getPrice
+
+getPrice root subpaths
+{
+1-http://localhost:1200/api/getPrice [GET] == PUBLIC
+2-http://localhost:1200/api/getPrice/[DELETE , PUT , POST] == PRIVATE
+    {
+        http://localhost:1200/api/getPrice == POST
+        http://localhost:1200/api/getPrice/:id == DELETE 
+        http://localhost:1200/api/getPrice/:id == PUT 
+    }
+}
+
+Post method input values:
+{
+    title : String , 
+    description :String ,
+    type : String ,
+    colorCode : String ,
+    Photo : String
+}
+/////////////////////////////////////////////////////////
+The root of all Story paths
+
+http://localhost:1200/api/Story
+
+Story root subpaths
+
+{
+1-http://localhost:1200/api/Story [GET] == PUBLIC
+2-http://localhost:1200/api/Story/[DELETE , POST] == PRIVATE
+    {
+        http://localhost:1200/api/Story == POST
+        http://localhost:1200/api/Story/:id == DELETE 
+    }
+}
+
+Post method input values:
+{
+    image1: String ,
+    image2 : String
+}
+/////////////////////////////////////////////////////////////
+The root of all users paths
+
+http://localhost:1200/api/users
+
+users root subpaths
+
+{
+1-http://localhost:1200/api/users [POST] == PUBLIC
+2-http://localhost:1200/api/users/[DELETE , GET] == PRIVATE
+    {
+        http://localhost:1200/api/users == GET
+        http://localhost:1200/api/users/:id == DELETE 
+    }
+}
+
+Post method input values:
+{
+    firstName : String ,
+    lastName : String ,
+    email : String ,
+    phoneNumber : String ,
+    jobDescription : String ,
+
+    details[{
+        quantity : Number ,
+        color : String ,
+        dimensions : String ,
+        weight : Number ,
+        photo : String 
+    }]
+}
+////////////////////////////////////////////////////////////
+The root of all OwnerLogin paths
+
+http://localhost:1200/api/OwnerLogin
+
+OwnerLogin root subpaths
+
+{
+1-http://localhost:1200/api/OwnerLogin [POST] == PUBLIC [Des : This path is for entering owner input information]
+2-http://localhost:1200/api/OwnerLogin/getEmailcode[POST] == PUBLIC [Des : This is the path to send an email to the owner]
+}
+
+Post method input values:
+{
+    username : String ,
+    password : String ,
+    sendcode : Number ,
+}
