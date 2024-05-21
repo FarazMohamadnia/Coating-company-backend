@@ -25,7 +25,7 @@ const getStory = (async(req, res) => {
 
 const createStory =(async(req , res)=>{
     const validation = validationResult(req);
-    if(!validation.isEmpty()) return res.json({
+    if(!validation.isEmpty()) return res.status(401).json({
         message : 'error',
         error : validation.array()
     })
@@ -41,7 +41,10 @@ const createStory =(async(req , res)=>{
             message : "Image uploaded successfully",
         });
     } catch (error) {
-        res.status(500).send(error.message);
+        res.status(500).json({
+            message:'error', 
+            error : error.message
+        });
     }
 }); 
 

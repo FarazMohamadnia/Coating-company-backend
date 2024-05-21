@@ -16,7 +16,7 @@ const {
 //GET
 usersRouter.get('/',cors(AuthIpAddress),authenticateOwner,getUsers);
 //POST
-usersRouter.post('/',usersVal(),createUsers);
+usersRouter.post('/',cors(AuthIpAddress),usersVal(),createUsers);
 //DELETE 
 usersRouter.delete('/:id',cors(AuthIpAddress),authenticateOwner,deleteUsers);
 

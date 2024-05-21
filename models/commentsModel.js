@@ -5,11 +5,13 @@ const commentSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
-    maxlength:150,
-    minlength:3
+    maxlength:250,
+    minlength:5
   },
   text: {
     type: String,
+    maxlength:4000,
+    minlength:5,
     required: true
   },
   createdAt: {
@@ -20,8 +22,6 @@ const commentSchema = new mongoose.Schema({
     {
         rptitle:{
             type : String ,
-            maxlength:150,
-            minlength:0
         },
         rptext:{
             type : String ,

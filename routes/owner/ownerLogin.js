@@ -24,7 +24,7 @@ OwnerloginRouter.post('/getEmailcode', accessControlMiddleware ,(req, res) => {
     code =new otp({ digits: 6 }).totp();
     const mailOptions = {
         from: EMAIL_OWNER,
-        to: 'Farazmnm@gmail.com',
+        to: EMAIL_OWNER,
         subject: 'Verification Code',
         text: `Your verification code is: ${code}`
     };
@@ -54,8 +54,8 @@ OwnerloginRouter.post('/', (req, res) => {
         code == sendcode
         ) {
             const token = jwt.sign({ id: owner.id, username: owner.username}, secretKey, { expiresIn:'15d' });
-            res.setHeader('Authorization' , token);
             return res.status(200).json({
+                Authorization:token, 
                 message : 'owner is login'
             });
         }else{

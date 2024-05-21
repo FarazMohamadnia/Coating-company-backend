@@ -17,9 +17,9 @@ const {
 
 //====Router====
 // GET
-commentsRouter.get('/',getComments)
+commentsRouter.get('/',cors(AuthIpAddress),getComments)
 //POST
-commentsRouter.post('/',CommentsVal(),createComments)
+commentsRouter.post('/',cors(AuthIpAddress),CommentsVal(),createComments)
 //DELETE 
 commentsRouter.delete('/:id',cors(AuthIpAddress),authenticateOwner,deleteComments);
 //PUT

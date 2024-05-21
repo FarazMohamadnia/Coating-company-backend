@@ -12,7 +12,7 @@ const {
     }=require('../../controllers/Story');
 //====Router====
 //GET
-storyRouter.get('/',getStory); 
+storyRouter.get('/',cors(AuthIpAddress),getStory); 
 //POST
 storyRouter.post('/',cors(AuthIpAddress),authenticateOwner,StoryVal(),createStory);
 //DELETE 

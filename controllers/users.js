@@ -24,7 +24,7 @@ const getUsers = (async(req, res) => {
 
 const createUsers =(async(req , res)=>{
     const {firstName , lastName , email , phoneNumber , jobDescription }= req.body;
-    const {quantity , color , dimensions , weight , photo}=req.body.details[0]
+    const {quantity , color , dimensions , weight , photo} = req.body.details[0];
     const ValResult = validationResult(req);
     if(!ValResult.isEmpty())return res.json({
         data :'null',

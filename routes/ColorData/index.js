@@ -16,7 +16,7 @@ const {
 
 //====Router====
 //GET
-getPriceRouter.get('/',getColorCard)
+getPriceRouter.get('/',cors(AuthIpAddress),getColorCard)
 //POST
 getPriceRouter.post('/',cors(AuthIpAddress),authenticateOwner,ColorVal(),createColorCard)
 //DELETE 
