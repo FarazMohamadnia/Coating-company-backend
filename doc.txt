@@ -95,11 +95,11 @@ users root subpaths
 
 Post method input values:
 {
-    firstName : String ,
-    lastName : String ,
-    email : String ,
-    phoneNumber : String ,
-    jobDescription : String ,
+    "firstName" : "String" ,
+    "lastName" : "String" ,
+    "email" : "String" ,
+    "phoneNumber" : "String" ,
+    "jobDescription" : "String" ,
 
     details[{
         quantity : Number ,

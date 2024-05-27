@@ -1,6 +1,6 @@
 const {WEB_DOMAIN , TEST_DOMAIN} =process.env
 const AuthIpAddress = {
-        origin: TEST_DOMAIN,         
+        origin: WEB_DOMAIN,         
 };
 
 module.exports = AuthIpAddress;

@@ -17,14 +17,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 
 // ==== PORT ====//
-const port = process.env.PORT || 1900;
+const port = process.env.PORT;
 
 //==== Route ====//
 app.use('/api',apiRouter);
 
+app.get('/' , (req , res)=>{
+    res.send('Connect to backend')
+})
 
 // connect to database
-mongoose.connect(`mongodb://localhost:27017/${process.env.DATABASE_URL}`)
+mongoose.connect(`${process.env.DATABASE_URL}`)
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.error('Could not connect to MongoDB', err));
 // Run server 
